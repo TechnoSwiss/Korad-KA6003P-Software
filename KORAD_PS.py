@@ -5,9 +5,10 @@ Created on Thu Oct  9 23:05:05 2014
 @author: jason
 """
 
-from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
+from Tkinter import *
+from ttk import *
+import Tkinter as ttk
+import tkMessageBox
 import serial
 import time
 
@@ -114,7 +115,7 @@ def SetVoltage(Voltage):
     if (float(Voltage) > float(VMAX)):
         Voltage = VMAX
     Voltage = "{:2.2f}".format(float(Voltage))
-    Output_string = SET_VOLTAGE + bytes(Voltage, "utf-8")
+    Output_string = SET_VOLTAGE + bytes(Voltage)
     PS.write(Output_string)
     print(Output_string)
     PS.flushInput()
@@ -141,7 +142,7 @@ def SetCurrent(Current):
     if (float(Current) > float(IMAX)):
         Current = IMAX
     Current = "{:2.3f}".format(float(Current))
-    Output_string = SET_CURRENT + bytes(Current, "utf-8")
+    Output_string = SET_CURRENT + bytes(Current)
     PS.write(Output_string)
     print(Output_string)
     PS.flushInput()
@@ -200,7 +201,7 @@ def SetOP(OnOff):
                        timeout=1)
     PS.flushInput()
 
-    Output_string = SET_OUTPUT + bytes(OnOff, "utf-8")
+    Output_string = SET_OUTPUT + bytes(OnOff)
 
     PS.write(Output_string)
     print(Output_string)
@@ -278,8 +279,8 @@ V_set = "{0:.2f}".format(Get_V_Set(), 'V')
 I_set = "{0:.3f}".format(Get_I_Set(), 'I')
 PSID = GetID()
 Stat = Get_Status()
-VMAX = '61'
-IMAX = '3.1'
+VMAX = '30'
+IMAX = '5'
 
 
 #==============================================================================
