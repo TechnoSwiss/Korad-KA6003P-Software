@@ -41,7 +41,7 @@ RCL_MEM = b"RCL"
 SAV_MEM = b"SAV"
 
 BEEP = b"BEEP"
-LOCK = b"BEEP"
+LOCK = b"LOCK"
 
 TRACK_SERIES = b"TRACK"
 
@@ -63,7 +63,7 @@ status = {
 # Methods
 #==============================================================================
 
-def Lock_Device():
+def Lock_Device(value):
     PS = serial.Serial("/dev/ttyACM0",
                        baudrate=9600,
                        bytesize=8,
@@ -71,11 +71,11 @@ def Lock_Device():
                        stopbits=1,
                        timeout=1)
     PS.flushInput()
-    request_string = "{0}{1}?".format(LOCK,1)
+    request_string = "{0}{1}?".format(LOCK,value)
     PS.write(request_string)  # Request the target voltage
     #Get_Status()
 
-def Beep_Off():
+def Beep_Off(value):
     PS = serial.Serial("/dev/ttyACM0",
                        baudrate=9600,
                        bytesize=8,
@@ -83,7 +83,7 @@ def Beep_Off():
                        stopbits=1,
                        timeout=1)
     PS.flushInput()
-    request_string = "{0}{1}?".format(BEEP,0)
+    request_string = "{0}{1}?".format(BEEP,value)
     PS.write(request_string)  # Request the target voltage
     #Get_Status()
 
@@ -385,8 +385,8 @@ I_set = "{0:.3f}".format(Get_I_Set(1), 'I')
 V2_set = "{0:.2f}".format(Get_V_Set(2), 'V')
 I2_set = "{0:.3f}".format(Get_I_Set(2), 'I')
 PSID = GetID()
-Lock_Device()
-Beep_Off()
+Lock_Device(1)
+#Beep_Off(1)
 Stat = Get_Status()
 print(b'PSID = '+PSID)
 print('Status = '+Stat)
@@ -518,3 +518,5 @@ OCP_Button.configure(command=lambda: ToggleOCP())
 # Update_VandI()
 Application_Loop()
 app.mainloop()
+
+Lock_Device(0)
